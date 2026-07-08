@@ -16,6 +16,11 @@ from .model import scorer
 logger = logging.getLogger(__name__)
 
 
+# Commit in batches so each transaction stays small — a single commit spanning
+# all ~170 countries can exceed the statement timeout on hosted Postgres.
+COMMIT_BATCH_SIZE = 25
+
+
 async def compute_all_scores(db: AsyncSession) -> int:
     """Compute pulse scores for all countries. Returns number of countries scored."""
     today = date.today()
@@ -56,7 +61,11 @@ async def compute_all_scores(db: AsyncSession) -> int:
                     )
                 )
             scored += 1
+
+            if scored % COMMIT_BATCH_SIZE == 0:
+                await db.commit()
         except Exception as exc:
+            await db.rollback()
             logger.error(f"Failed to score {iso3}: {exc}")
 
     await db.commit()
