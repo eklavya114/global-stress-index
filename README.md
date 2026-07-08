@@ -13,6 +13,8 @@ A live dashboard that scores every country on Earth from 0 to 100 across conflic
 ![XGBoost](https://img.shields.io/badge/XGBoost-ML%20Model-EC0000?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
 
+### [🚀 View the Live Dashboard](https://earth-pulse-ivory.vercel.app)
+
 </div>
 
 ---
