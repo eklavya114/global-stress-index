@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent-cyan:   #00d4ff;
+  --accent-blue:   #0066ff;
+  --accent-green:  #00ff88;
+  --accent-red:    #ff3355;
+  --accent-orange: #ff8800;
+  --bg-deep:       #020408;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg-deep);
+  color: #e2e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* MapLibre: allow full-size rendering */
+.maplibregl-canvas-container,
+.maplibregl-map { width: 100%; height: 100%; }
+.maplibregl-ctrl-logo,
+.maplibregl-ctrl-attrib { display: none !important; }
+
+/* Glassmorphism */
+.glass-strong {
+  background: rgba(2, 8, 20, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255,255,255,0.09);
+}
+
+/* Logo shimmer */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.logo-shimmer {
+  background: linear-gradient(90deg, #00d4ff 0%, #ffffff 35%, #00d4ff 55%, #0088ff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+/* Live dot pulse */
+@keyframes pulse-ring {
+  0%   { transform: scale(0.85); opacity: 1; }
+  100% { transform: scale(2.2);  opacity: 0; }
+}
+.live-dot {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 8px;
+  height: 8px;
+}
+.live-dot::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid #00ff88;
+  animation: pulse-ring 1.8s ease-out infinite;
+}
+
+/* Marker pulse - critical */
+@keyframes marker-pulse {
+  0%   { box-shadow: 0 0 0 0px rgba(255,51,85,0.8), 0 0 0 0px rgba(255,51,85,0.4); }
+  70%  { box-shadow: 0 0 0 8px rgba(255,51,85,0), 0 0 0 14px rgba(255,51,85,0); }
+  100% { box-shadow: 0 0 0 0px rgba(255,51,85,0), 0 0 0 0px rgba(255,51,85,0); }
+}
+.marker-dot { animation: marker-pulse 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; }
+
+/* Radar sweep */
+@keyframes radar-sweep {
+  0%   { transform: scale(0.5); opacity: 1; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+.marker-radar::before,
+.marker-radar::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  animation: radar-sweep 2s ease-out infinite;
+}
+.marker-radar::after {
+  animation-delay: 1s;
+}
+
+/* Map intel tooltip */
+.intel-tooltip {
+  position: absolute;
+  z-index: 50;
+  pointer-events: none;
+  background: rgba(2, 8, 20, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 10px;
+  padding: 8px 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+
+/* Text clamp utility */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Score glow */
+.glow-green  { text-shadow: 0 0 20px rgba(0,255,136,0.5); }
+.glow-yellow { text-shadow: 0 0 20px rgba(255,200,0,0.5); }
+.glow-orange { text-shadow: 0 0 20px rgba(255,136,0,0.5); }
+.glow-red    { text-shadow: 0 0 20px rgba(255,51,85,0.5); }
+
+/* Scanline CRT overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0,0,0,0.022) 3px,
+    rgba(0,0,0,0.022) 4px
+  );
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
