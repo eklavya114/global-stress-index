@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: earth-pulse-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: ACLED_API_KEY
+        sync: false
+      - key: ACLED_EMAIL
+        sync: false
+      - key: SCRAPER_INTERVAL_HOURS
+        value: "6"
+      - key: LOG_LEVEL
+        value: "INFO"
